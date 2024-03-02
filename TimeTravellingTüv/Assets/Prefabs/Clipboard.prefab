@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 5165926355772993217}
   - component: {fileID: 6239369661962923622}
   - component: {fileID: 3183438599859626152}
-  - component: {fileID: 6890222738189401496}
   - component: {fileID: 5742754975325263687}
+  - component: {fileID: 6628303318120551311}
   m_Layer: 0
   m_Name: Clipboard
   m_TagString: Untagged
@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 766991087578746898}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.032430414, y: 0.06371542, z: 0.0175743, w: 0.99728626}
+  m_LocalRotation: {x: 0.032428805, y: 0.063719705, z: 0.01757292, w: 0.9972861}
   m_LocalPosition: {x: 0.009, y: 1.269, z: 1.078}
   m_LocalScale: {x: 0.43758416, y: 0.63991183, z: 0.05534841}
   m_ConstrainProportionsScale: 0
@@ -86,27 +86,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6890222738189401496
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 766991087578746898}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5742754975325263687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,6 +105,19 @@ MonoBehaviour:
   - Nixon
   - Vanessa
   clipboardEntryStatus: 0100000001000000010000000200000002000000
+--- !u!114 &6628303318120551311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 766991087578746898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f41f6ffdbcf17749ab32a8620702bbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clipboardLerpParent: {fileID: 0}
 --- !u!1 &4578510351184437334
 GameObject:
   m_ObjectHideFlags: 0

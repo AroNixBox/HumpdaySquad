@@ -4,15 +4,18 @@ using UnityEngine;
 public class Interact : MonoBehaviour
 {
     private StarterAssetsInputs _starterAssetsInputs;
+    private PhysicalClipboard _physicalClipboard;
     public bool IsInteracting;
 
     private void Awake()
     {
         _starterAssetsInputs = FindObjectOfType<StarterAssetsInputs>();
+        _physicalClipboard = FindObjectOfType<PhysicalClipboard>();
     }
 
     private void Update()
     {
+        if(_physicalClipboard.IsClipboardEquipped) return;
         if (_starterAssetsInputs.interact && !IsInteracting)
         {
             _starterAssetsInputs.interact = false;

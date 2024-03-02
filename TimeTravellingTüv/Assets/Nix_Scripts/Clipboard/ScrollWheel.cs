@@ -9,11 +9,13 @@ public class ScrollWheel : MonoBehaviour
     private int _selectedIndex = 0;
     [SerializeField] private StarterAssetsInputs input;
     [SerializeField] private UIClipboard uiClipboard;
+    private PhysicalClipboard _physicalClipboard;
     private Interact _interact;
 
     private void Awake()
     {
         _interact = FindObjectOfType<Interact>();
+        _physicalClipboard = FindObjectOfType<PhysicalClipboard>();
     }
 
     private IEnumerator Start()
@@ -40,6 +42,9 @@ public class ScrollWheel : MonoBehaviour
 
     private void ProcessScrollInput()
     {
+        //return early if the input isnt equipped
+        if(!_physicalClipboard.IsClipboardEquipped) return;
+        
         int previousIndex = _selectedIndex;
         float scroll = input.scroll;
         if (scroll == 0f) return;
@@ -56,6 +61,9 @@ public class ScrollWheel : MonoBehaviour
     private void ProcessMarkInput()
     {
         input.mark = false;
+        //return early if the input isnt equipped
+        if(!_physicalClipboard.IsClipboardEquipped) return;
+        
         var entryToMark = uiClipboard.Entries[_selectedIndex];
         if(entryToMark == null) return;
         

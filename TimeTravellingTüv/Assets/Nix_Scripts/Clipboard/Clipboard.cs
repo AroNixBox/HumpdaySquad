@@ -9,7 +9,7 @@ public class Clipboard : MonoBehaviour
     //Add enough space for each string to be stored
     [field: SerializeField, TextArea(3, 10)] public List<string> ClipBoardEntries {get; private set;} = new();
     public static Clipboard Instance { get; private set; }
-    [Tooltip("CORRECT: STANDARTS WERE MET, COSSED: STANDARTS WERE NOT MET (THIS CAUSED THE ISSUE)")]
+    [Tooltip("CORRECT: STANDARDS WERE MET, CROSSED: STANDARDS WERE NOT MET (THIS CAUSED THE ISSUE)")]
     [SerializeField] private ClipboardEntryStatus[] clipboardEntryStatus;
     private void Awake()
     {
@@ -33,4 +33,5 @@ public class Clipboard : MonoBehaviour
         
         return clipboardEntryStatus[index] == passedInStatus;
     }
+
 }

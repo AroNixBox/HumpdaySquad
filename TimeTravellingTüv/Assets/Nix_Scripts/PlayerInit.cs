@@ -8,7 +8,14 @@ using UnityEngine.Serialization;
 public class PlayerInit : MonoBehaviour
 {
     private FirstPersonController _firstPersonController;
-    [SerializeField] private ParticleSystem tpVFX;
+    [Header("References")]
+    [SerializeField] private GameObject tpVFX;
+    [SerializeField] private AudioSource tpAudioSource;
+    
+    [Header("Values")]
+    [SerializeField] private AudioClip startTPClip;
+    [SerializeField] private AudioClip endTPClip;
+
     
     private void Awake()
     {
@@ -20,9 +27,25 @@ public class PlayerInit : MonoBehaviour
         if(!_firstPersonController.Grounded) { return; }
         if(_firstPersonController.JumpTimeoutDelta > 0f) { return; }
         
+
+        StartCoroutine(TeleportVFX());
+    }
+    private IEnumerator TeleportVFX()
+    {
+        tpVFX.SetActive(true);
         _firstPersonController.isPaused = true;
-        tpVFX.Play();
+        
+        tpAudioSource.clip = startTPClip;
+        tpAudioSource.Play();
+        yield return new WaitForSeconds(tpAudioSource.clip.length);
+        
         SceneManager.Instance.ChangeLevel();
+ 
+        tpAudioSource.clip = endTPClip;
+        tpAudioSource.Play();
+        yield return new WaitForSeconds(tpAudioSource.clip.length);
+        
         _firstPersonController.isPaused = false;
+        tpVFX.SetActive(false);
     }
 }

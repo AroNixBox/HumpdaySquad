@@ -117,6 +117,7 @@ namespace StarterAssets
 		private void Update()
 		{
 			if(isPaused) { return; }
+			
 			JumpAndGravity();
 			GroundedCheck();
 			Move();

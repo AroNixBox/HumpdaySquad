@@ -16,18 +16,31 @@ public class Inspect : MonoBehaviour, IInteraction
     private bool StartInspecting;
     private bool StopInspecting;
 
+    [Tooltip("(This Value will be set automatically in-script) " +
+        "Value for rotating object along local x-axis")]
     [SerializeField] private float RotX;
+    [Tooltip("(This Value will be set automatically in-script) " +
+        "Value for rotating object along local y-axis")]
     [SerializeField] private float RotY;
+    [Tooltip("(Value for the rotation-speed of the object")]
     [SerializeField] private float RotSpeed = 2f;
 
+    [Tooltip("(This Value will be set automatically in-script) " +
+        "Value for the amount of zooming happening")]
     [SerializeField] private float Zoom;
+    [Tooltip("(This Value will be set automatically in-script) " +
+        "Value for the maximum size the object can become")]
     [SerializeField] private Vector3 MaxSize;
+    [Tooltip("(This Value will be set automatically in-script) " +
+        "Value for the minimum size the object can become")]
     [SerializeField] private Vector3 MinSize;
 
     [SerializeField] private GameObject Player;
     [SerializeField] private GameObject Camera;
     private FirstPersonController CC;
     private Interact _interact;
+
+    [Tooltip("Size the object will inherit when inspecting (needed for large objects (needs to be manually added")]
     public Vector3 InspectSize;
     void Start()
     {

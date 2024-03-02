@@ -66,14 +66,13 @@ public class Inspect : MonoBehaviour, IInteraction
     {
         if (_inspecting)
         {
+            _interact.IsInteracting = true;
+            _characterController.enabled = false;
+            
             RotX = -_starterAssetsInputs.look.x;
             RotY = -_starterAssetsInputs.look.y;
             float targetZoom = _starterAssetsInputs.scroll * transform.localScale.x / 500;
             Zoom = Mathf.Lerp(Zoom, targetZoom, .1f);
-
-
-            _characterController.enabled = false;
-            _interact.IsInteracting = true;
 
             if (transform.position != Camera.transform.position + Camera.transform.forward * 1.5f)
             {

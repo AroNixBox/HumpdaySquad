@@ -28,7 +28,8 @@ public class SceneManager : MonoBehaviour
 
     private void SavePlayerState(Vector3 position, Quaternion playerCameraRootRotation, Quaternion playerCapsuleRotation)
     {
-        _playerCapsulePosition = position;
+        Vector3 playerCapsulePosition = new Vector3(position.x, position.y + 0.2f, position.z);
+        _playerCapsulePosition = playerCapsulePosition;
         _playerCameraRootRotation = playerCameraRootRotation;
         _playerCapsuleRotation = playerCapsuleRotation;
     }

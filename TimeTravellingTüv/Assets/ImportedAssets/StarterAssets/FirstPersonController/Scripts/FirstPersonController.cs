@@ -45,6 +45,8 @@ namespace StarterAssets
 		[Tooltip("What layers the character uses as ground")]
 		public LayerMask GroundLayers;
 
+		public bool isPaused;
+
 		[Header("Cinemachine")]
 		[Tooltip("The follow target set in the Cinemachine Virtual Camera that the camera will follow")]
 		public GameObject CinemachineCameraTarget;
@@ -63,7 +65,7 @@ namespace StarterAssets
 		private float _terminalVelocity = 53.0f;
 
 		// timeout deltatime
-		private float _jumpTimeoutDelta;
+		public float JumpTimeoutDelta {get; private set;}
 		private float _fallTimeoutDelta;
 
 	
@@ -108,12 +110,13 @@ namespace StarterAssets
 #endif
 
 			// reset our timeouts on start
-			_jumpTimeoutDelta = JumpTimeout;
+			JumpTimeoutDelta = JumpTimeout;
 			_fallTimeoutDelta = FallTimeout;
 		}
 
 		private void Update()
 		{
+			if(isPaused) { return; }
 			JumpAndGravity();
 			GroundedCheck();
 			Move();
@@ -231,22 +234,22 @@ namespace StarterAssets
 				}
 
 				// Jump
-				if (_input.jump && _jumpTimeoutDelta <= 0.0f)
+				if (_input.jump && JumpTimeoutDelta <= 0.0f)
 				{
 					// the square root of H * -2 * G = how much velocity needed to reach desired height
 					_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
 				}
 
 				// jump timeout
-				if (_jumpTimeoutDelta >= 0.0f)
+				if (JumpTimeoutDelta >= 0.0f)
 				{
-					_jumpTimeoutDelta -= Time.deltaTime;
+					JumpTimeoutDelta -= Time.deltaTime;
 				}
 			}
 			else
 			{
 				// reset the jump timeout timer
-				_jumpTimeoutDelta = JumpTimeout;
+				JumpTimeoutDelta = JumpTimeout;
 
 				// fall timeout
 				if (_fallTimeoutDelta >= 0.0f)

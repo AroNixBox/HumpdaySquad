@@ -22,9 +22,11 @@ public class PlayerInit : MonoBehaviour
     {
         if (!Input.GetKeyDown(KeyCode.F5)){ return; }
         if(!firstPersonController.Grounded) { return; }
+        if(firstPersonController.JumpTimeoutDelta > 0f) { return; }
         
+        firstPersonController.isPaused = true;
         tpVFX.Play();
-        SceneManager.Instance.ChangeScene(playerCapsuleTransform.position, playerCameraRootTransform.rotation, playerCapsuleTransform.rotation);
+        SceneManager.Instance.ChangeScene(transform.position, playerCameraRootTransform.rotation, playerCapsuleTransform.rotation);
     }
 
     private void LoadPlayerStateAndSetPosition()
@@ -37,5 +39,6 @@ public class PlayerInit : MonoBehaviour
         _characterController.Move(playerCapsulePosition);
         firstPersonController.InitializeCameraRotation(cameraRootRotation, playerCapsuleRotation);
         tpVFX.Play();
+        firstPersonController.isPaused = false;
     }
 }

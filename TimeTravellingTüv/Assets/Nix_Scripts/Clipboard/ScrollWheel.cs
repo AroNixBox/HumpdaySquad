@@ -51,7 +51,7 @@ public class ScrollWheel : MonoBehaviour
 
         _selectedIndex += scroll > 0f ? -1 : 1;
         _selectedIndex = (_selectedIndex + uiClipboard.Entries.Count) % uiClipboard.Entries.Count;
-        //input.scroll = 0;
+        input.scroll = 0;
         if (previousIndex != _selectedIndex)
         {
             uiClipboard.HighlightSelectedSlot(_selectedIndex);

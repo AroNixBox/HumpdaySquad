@@ -85,6 +85,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ResetInspect",
+                    "type": "Button",
+                    "id": "d369384a-8bd8-4db6-816f-b8171bfe19e3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -193,7 +202,7 @@
                     "path": "<Gamepad>/leftStick",
                     "interactions": "",
                     "processors": "StickDeadzone",
-                    "groups": "Gamepad",
+                    "groups": "Gamepad;Xbox Controller;PS4 Controller",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -215,7 +224,7 @@
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
                     "processors": "InvertVector2(invertX=false),StickDeadzone,ScaleVector2(x=300,y=300)",
-                    "groups": "Gamepad",
+                    "groups": "Gamepad;Xbox Controller;PS4 Controller",
                     "action": "Look",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -237,7 +246,7 @@
                     "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Gamepad",
+                    "groups": "Gamepad;Xbox Controller;PS4 Controller",
                     "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -259,7 +268,7 @@
                     "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Gamepad",
+                    "groups": "Gamepad;Xbox Controller;PS4 Controller",
                     "action": "Sprint",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -267,10 +276,21 @@
                 {
                     "name": "",
                     "id": "37528e4e-ea4c-4058-98e5-9c6cc3719af1",
-                    "path": "<Keyboard>/q",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
+                    "action": "Mark",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6cab122b-257b-4d95-8dae-95dbbfcf83c9",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad;PS4 Controller;Xbox Controller",
                     "action": "Mark",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -281,7 +301,18 @@
                     "path": "<Mouse>/scroll",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "KeyboardMouse",
+                    "action": "Scroll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9e36b985-fc01-4965-89aa-b03523736bc9",
+                    "path": "<Gamepad>/dpad",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Xbox Controller;PS4 Controller;Gamepad",
                     "action": "Scroll",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -299,11 +330,33 @@
                 },
                 {
                     "name": "",
+                    "id": "2d9bdbf9-c6a5-49f9-85ee-637bec8f1d82",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad;Xbox Controller;PS4 Controller",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "e8d0e0ac-1ae4-489f-a55b-eee4aaf6c360",
                     "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
+                    "action": "PullOutClipboard",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "80bb9b90-428b-43b8-8c3a-e8c7c89ee057",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad;Xbox Controller;PS4 Controller",
                     "action": "PullOutClipboard",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -316,6 +369,61 @@
                     "processors": "",
                     "groups": "KeyboardMouse",
                     "action": "Teleport",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "L1 / R1",
+                    "id": "5f2285c3-f810-4752-9769-de1dde2f3d53",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Teleport",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "17e86b44-e4e0-45ce-ac8b-936b75344910",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PS4 Controller;Xbox Controller;Gamepad",
+                    "action": "Teleport",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "30dd8bbd-46d8-48f2-8bf9-b35ffd2975b5",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad;Xbox Controller;PS4 Controller",
+                    "action": "Teleport",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "f585b674-393d-413c-abe3-c8149e807470",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "ResetInspect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "17a8580a-e0b0-49ff-b572-906d8f760a43",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "Gamepad;Xbox Controller;PS4 Controller",
+                    "action": "ResetInspect",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

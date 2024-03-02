@@ -16,6 +16,9 @@ public class Inspect : MonoBehaviour, IInteraction
     private bool _startInspecting;
     private bool _stopInspecting;
 
+    private float _divisor;
+    private float _rotMod;
+
     [Tooltip("(This Value will be set automatically in-script) " +
         "Value for rotating object along local x-axis")]
     [SerializeField] private float RotX;
@@ -54,6 +57,7 @@ public class Inspect : MonoBehaviour, IInteraction
 
     void Start()
     {
+        UpdateDivisorBasedOnInputDevice();
         _position = transform.position;
         _rotation = transform.rotation;
         _scale = transform.localScale;
@@ -68,10 +72,10 @@ public class Inspect : MonoBehaviour, IInteraction
         {
             _interact.IsInteracting = true;
             _characterController.enabled = false;
-            
-            RotX = -_starterAssetsInputs.look.x;
-            RotY = -_starterAssetsInputs.look.y;
-            float targetZoom = _starterAssetsInputs.scroll * transform.localScale.x / 500;
+
+            RotX = -_starterAssetsInputs.look.x / _rotMod;
+            RotY = -_starterAssetsInputs.look.y / _rotMod; 
+            float targetZoom = _starterAssetsInputs.scroll * transform.localScale.x / _divisor;
             Zoom = Mathf.Lerp(Zoom, targetZoom, .1f);
 
             if (transform.position != _camera.transform.position + _camera.transform.forward * 1.5f)
@@ -98,12 +102,13 @@ public class Inspect : MonoBehaviour, IInteraction
                                  Quaternion.AngleAxis(RotY * RotSpeed, transform.right) *
                                  transform.rotation;
             
-            //TODO: Removed this for now because we dont need it
-            // if (Input.GetKeyDown(KeyCode.R)) // This will set the rotation and scale of the object to default inspect
-            // {
-            //     transform.rotation = Camera.transform.rotation;
-            //     transform.localScale = InspectSize;
-            // }
+            if (_starterAssetsInputs.resetInspect) // This will set the rotation and scale of the object to default inspect
+            {
+                _starterAssetsInputs.resetInspect = false;
+
+                 transform.rotation = _camera.transform.rotation;
+                 transform.localScale = InspectSize;
+            }
             
             // Zoom in and out of an object
             transform.localScale = new Vector3(
@@ -149,12 +154,6 @@ public class Inspect : MonoBehaviour, IInteraction
         _startInspecting = true;
         _inspecting = true;
         transform.rotation = Quaternion.Lerp(transform.rotation, _camera.transform.rotation, 0.5f);
-        StartCoroutine(EnableBool());
-    }
-
-    private IEnumerator EnableBool()
-    {
-        yield return new WaitForSeconds(0.2f);
         _stopInspecting = true;
     }
 
@@ -169,5 +168,31 @@ public class Inspect : MonoBehaviour, IInteraction
         _returning = true;
         _inspecting = false;
         _characterController.enabled = true;
+    }
+    void UpdateDivisorBasedOnInputDevice()
+    {
+        if (IsControllerConnected())
+        {
+            _divisor = 100f; // Controller angeschlossen
+            _rotMod = 100f;
+        }
+        else
+        {
+            _divisor = 500f; // Kein Controller, Maus wird verwendet
+            _rotMod = 1f;
+        }
+    }
+
+    bool IsControllerConnected()
+    {
+        string[] joysticks = Input.GetJoystickNames();
+        foreach (string joystick in joysticks)
+        {
+            if (!string.IsNullOrEmpty(joystick))
+            {
+                return true; // Mindestens ein Controller ist angeschlossen
+            }
+        }
+        return false; // Keine Controller angeschlossen
     }
 }

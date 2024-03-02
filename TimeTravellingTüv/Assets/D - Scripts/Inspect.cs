@@ -35,8 +35,8 @@ public class Inspect : MonoBehaviour, IInteraction
         Rotation = transform.rotation;
         Scale = transform.localScale;
 
-        MaxSize = InspectSize * 2f;
-        MinSize = InspectSize / 2f;
+        MaxSize = InspectSize * 5f;
+        MinSize = InspectSize / 5f;
     }
 
     void Update()
@@ -45,20 +45,21 @@ public class Inspect : MonoBehaviour, IInteraction
         {
             RotX = -Input.GetAxis("Mouse X");
             RotY = Input.GetAxis("Mouse Y");
-            Zoom = Input.GetAxis("Mouse ScrollWheel");
+            Zoom = Input.GetAxis("Mouse ScrollWheel") * transform.localScale.x;
 
             CC = Player.GetComponent<FirstPersonController>();
             CC.enabled = false;
             _interact = Camera.GetComponent<Interact>();
             _interact.IsInteracting = true;
 
-            if (StartInspecting) // Change rotation and scale of object to inspect size at start of inspecting
+            if (transform.position != Camera.transform.position + Camera.transform.forward * 1.5f)
             {
-                if (transform.position != Camera.transform.position + Camera.transform.forward * 1.5f)
-                {
-                    transform.position = Vector3.Lerp(transform.position, Camera.transform.position
-                    + Camera.transform.forward * 1.5f, 0.1f);
-                }
+                transform.position = Vector3.Lerp(transform.position, Camera.transform.position
+                + Camera.transform.forward * 1.5f, 0.1f);
+            }
+
+            if (StartInspecting) // Change rotation and scale of object to inspect values at start of inspecting
+            {
                 if (transform.localScale != InspectSize)
                 {
                     transform.localScale = Vector3.Lerp(transform.localScale, InspectSize, 0.5f);
@@ -71,7 +72,7 @@ public class Inspect : MonoBehaviour, IInteraction
                 }
             }
 
-            if (Input.GetMouseButton(0)) // Holding LMB and moving the mouse will rotate the object
+            if (Input.GetMouseButton(0)) // Holding LMB and moving the mouse will rotate the object (along local-axis)
             {
                 transform.rotation = Quaternion.AngleAxis(RotX * RotSpeed, transform.up) *
                 Quaternion.AngleAxis(RotY * RotSpeed, transform.right) *

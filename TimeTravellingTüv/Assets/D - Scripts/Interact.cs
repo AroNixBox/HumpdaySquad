@@ -9,9 +9,11 @@ public interface IInteraction
 
 public class Interact : MonoBehaviour
 {
+    public bool IsInteracting;
+
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && !IsInteracting)
         {
             interact();
         }

@@ -34,9 +34,8 @@ public class Inspect : MonoBehaviour, IInteraction
     [Tooltip("(This Value will be set automatically in-script) " +
         "Value for the minimum size the object can become")]
     [SerializeField] private Vector3 MinSize;
-
-    [SerializeField] private GameObject Player;
-    [SerializeField] private GameObject Camera;
+    
+    private GameObject _camera;
     
     private FirstPersonController _characterController;
     private StarterAssetsInputs _starterAssetsInputs;
@@ -47,9 +46,10 @@ public class Inspect : MonoBehaviour, IInteraction
 
     private void Awake()
     {
-        _characterController = Player.GetComponent<FirstPersonController>();
-        _interact = Camera.GetComponent<Interact>();
-        _starterAssetsInputs = Player.GetComponent<StarterAssetsInputs>();
+        _characterController = FindObjectOfType<FirstPersonController>();
+        _camera = Camera.main.gameObject;
+        _interact = Camera.main.GetComponent<Interact>();
+        _starterAssetsInputs = FindObjectOfType<StarterAssetsInputs>();
     }
 
     void Start()
@@ -74,10 +74,10 @@ public class Inspect : MonoBehaviour, IInteraction
             float targetZoom = _starterAssetsInputs.scroll * transform.localScale.x / 500;
             Zoom = Mathf.Lerp(Zoom, targetZoom, .1f);
 
-            if (transform.position != Camera.transform.position + Camera.transform.forward * 1.5f)
+            if (transform.position != _camera.transform.position + _camera.transform.forward * 1.5f)
             {
-                transform.position = Vector3.Lerp(transform.position, Camera.transform.position
-                + Camera.transform.forward * 1.5f, 0.1f);
+                transform.position = Vector3.Lerp(transform.position, _camera.transform.position
+                + _camera.transform.forward * 1.5f, 0.1f);
             }
 
             if (_startInspecting) // Change rotation and scale of object to inspect values at start of inspecting
@@ -87,8 +87,8 @@ public class Inspect : MonoBehaviour, IInteraction
                     transform.localScale = Vector3.Lerp(transform.localScale, InspectSize, 0.5f);
                 }
 
-                if (transform.position == Camera.transform.position + Camera.transform.forward * 1.5f ||
-                    transform.localScale == InspectSize || transform.rotation == Camera.transform.rotation)
+                if (transform.position == _camera.transform.position + _camera.transform.forward * 1.5f ||
+                    transform.localScale == InspectSize || transform.rotation == _camera.transform.rotation)
                 {
                     _startInspecting = false;
                 }
@@ -148,7 +148,7 @@ public class Inspect : MonoBehaviour, IInteraction
     {
         _startInspecting = true;
         _inspecting = true;
-        transform.rotation = Quaternion.Lerp(transform.rotation, Camera.transform.rotation, 0.5f);
+        transform.rotation = Quaternion.Lerp(transform.rotation, _camera.transform.rotation, 0.5f);
         StartCoroutine(EnableBool());
     }
 

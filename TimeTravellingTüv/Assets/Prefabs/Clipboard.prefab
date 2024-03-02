@@ -104,7 +104,7 @@ MonoBehaviour:
   - Susi
   - Nixon
   - Vanessa
-  clipboardEntryStatus: 0100000001000000010000000200000002000000
+  clipboardEntryStatus: 0200000002000000010000000200000002000000
 --- !u!114 &6628303318120551311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,7 +117,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f41f6ffdbcf17749ab32a8620702bbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clipboardLerpParent: {fileID: 0}
+  unequippedLerpQlipboardParent: {fileID: 0}
+  equippedLerpQlipboardParent: {fileID: 0}
 --- !u!1 &4578510351184437334
 GameObject:
   m_ObjectHideFlags: 0

@@ -19,11 +19,18 @@ public class PhysicalClipboard : MonoBehaviour
 
     private void Update()
     {
-        if (!_interact.IsInteracting && _input.checklistPull)
+        if (_interact.IsInteracting)
         {
             _input.checklistPull = false;
+            return;
+        }
+        if (!_interact.IsInteracting && _input.checklistPull || 
+            !_interact.IsInteracting && IsClipboardEquipped && _input.cancelAction)
+        {
+            _input.checklistPull = false; _input.cancelAction = false;
             IsClipboardEquipped = !IsClipboardEquipped;
         }
+
         var parent = IsClipboardEquipped ? equippedLerpQlipboardParent : unequippedLerpQlipboardParent;
         transform.position = Vector3.Lerp(transform.position, parent.position, 10f * Time.deltaTime);
         transform.rotation = Quaternion.Lerp(transform.rotation, parent.rotation, 10f * Time.deltaTime);

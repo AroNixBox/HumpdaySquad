@@ -15,7 +15,11 @@ public class Interact : MonoBehaviour
 
     private void Update()
     {
-        if(_physicalClipboard.IsClipboardEquipped) return;
+        if (_physicalClipboard.IsClipboardEquipped)
+        {
+            _starterAssetsInputs.interact = false;
+            return;
+        }
         if (_starterAssetsInputs.interact && !IsInteracting)
         {
             _starterAssetsInputs.interact = false;

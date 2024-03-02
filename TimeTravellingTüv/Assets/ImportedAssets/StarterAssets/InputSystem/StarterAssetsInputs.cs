@@ -12,6 +12,8 @@ namespace StarterAssets
 		public Vector2 look;
 		public bool jump;
 		public bool sprint;
+		public bool mark;
+		public float scroll;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -42,6 +44,16 @@ namespace StarterAssets
 		public void OnSprint(InputValue value)
 		{
 			SprintInput(value.isPressed);
+		}
+		
+		public void OnScroll(InputValue value)
+		{
+			scroll = value.Get<Vector2>().y;
+		}
+		
+		public void OnMark(InputValue value)
+		{
+			mark = value.isPressed;
 		}
 #endif
 

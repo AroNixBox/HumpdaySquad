@@ -696,6 +696,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ac6f88f3b5e7a04c897f63503e9a45b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  preLevel:
+    m_SceneAsset: {fileID: 102900000, guid: a660bb5cd3d04ac41a678ddeb488ebf3, type: 3}
+    m_SceneName: Nixon_Dev_TWO
+  postLevel:
+    m_SceneAsset: {fileID: 102900000, guid: 707acc8dffb72b144bb1ffbe1c965f3d, type: 3}
+    m_SceneName: Nixon_Dev_ONE
 --- !u!4 &1326979078
 Transform:
   m_ObjectHideFlags: 0
@@ -1121,6 +1127,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCapsuleTransform: {fileID: 135756641613574979}
   playerCameraRootTransform: {fileID: 8338988565591873055}
+  firstPersonController: {fileID: 135756641613574982}
+--- !u!114 &135756641613574982 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8616685848737228371, guid: c5efc39a8aaf6e64ea40e9ad573e9b47,
+    type: 3}
+  m_PrefabInstance: {fileID: 5393215579111688471}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 985738030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55919ac34a26952479f3fc91f777b2fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2114283753834967212
 GameObject:
   m_ObjectHideFlags: 0
@@ -1283,6 +1302,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8616685848737228371, guid: c5efc39a8aaf6e64ea40e9ad573e9b47,
+        type: 3}
+      propertyPath: RotationSpeed
+      value: 500
+      objectReference: {fileID: 0}
     - target: {fileID: 8616685848737228371, guid: c5efc39a8aaf6e64ea40e9ad573e9b47,
         type: 3}
       propertyPath: GroundLayers.m_Bits

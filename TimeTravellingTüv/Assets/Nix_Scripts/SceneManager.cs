@@ -5,8 +5,13 @@ using UnityEngine.SceneManagement;
 public class SceneManager : MonoBehaviour
 {
     public static SceneManager Instance { get; private set; }
+    [SerializeField] private SceneField preLevel;
+    [SerializeField] private SceneField postLevel;
     private Vector3 _playerCapsulePosition;
+    private Quaternion _playerCapsuleRotation;
     private Quaternion _playerCameraRootRotation;
+
+    private int CurrentSceneIndex => UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
 
     private void Awake()
     {
@@ -21,31 +26,43 @@ public class SceneManager : MonoBehaviour
         }
     }
 
-    private void SavePlayerState(Vector3 position, Quaternion rotation)
+    private void SavePlayerState(Vector3 position, Quaternion playerCameraRootRotation, Quaternion playerCapsuleRotation)
     {
         _playerCapsulePosition = position;
-        _playerCameraRootRotation = rotation;
+        _playerCameraRootRotation = playerCameraRootRotation;
+        _playerCapsuleRotation = playerCapsuleRotation;
     }
 
-    public (Vector3 position, Quaternion rotation) LoadPlayerState()
+    public (Vector3 playerCapsulePosition, Quaternion playerCameraRootRotation, Quaternion playerCapsuleRotation) LoadPlayerState()
     {
         Vector3 playerCapsulePosition = Vector3.zero;
         Quaternion playerCameraRootRotation = Quaternion.identity;
+        Quaternion playerCapsuleRotation = Quaternion.identity;
 
-        if (_playerCapsulePosition != Vector3.zero && _playerCameraRootRotation != Quaternion.identity)
+        if (_playerCapsulePosition != Vector3.zero && _playerCameraRootRotation != Quaternion.identity && _playerCapsuleRotation != Quaternion.identity)
         {
             playerCapsulePosition = _playerCapsulePosition;
             playerCameraRootRotation = _playerCameraRootRotation;
+            playerCapsuleRotation = _playerCapsuleRotation;
         }
 
-        return (playerCapsulePosition, playerCameraRootRotation);
+        return (playerCapsulePosition, playerCameraRootRotation, playerCapsuleRotation);
     }
 
     
-    public void ChangeScene(Vector3 position, Quaternion rotation, string sceneName)
+    public void ChangeScene(Vector3 playerCapsulePosition, Quaternion playerCameraRootRotation, Quaternion playerCapsuleRotation)
     {
-        SavePlayerState(position, rotation);
-        StartCoroutine(ChangeSceneCoroutine(sceneName));
+        SavePlayerState(playerCapsulePosition, playerCameraRootRotation, playerCapsuleRotation);
+        
+        switch (CurrentSceneIndex)
+        {
+            case 0:
+                StartCoroutine(ChangeSceneCoroutine(postLevel.SceneName));
+                break;
+            case 1:
+                StartCoroutine(ChangeSceneCoroutine(preLevel.SceneName));
+                break;
+        }
     }
 
     private IEnumerator ChangeSceneCoroutine(string sceneName)

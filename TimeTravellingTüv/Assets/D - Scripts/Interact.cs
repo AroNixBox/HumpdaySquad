@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public interface IInteraction
+{
+    void Interacter();
+}
+
 public class Interact : MonoBehaviour
 {
-    public interface IInteraction
-    {
-        void Interacter();
-    }
-
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))

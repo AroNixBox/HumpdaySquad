@@ -16,6 +16,7 @@ namespace StarterAssets
 		public float scroll;
 		public bool interact;
 		public bool checklistPull;
+		public bool teleport;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -66,6 +67,11 @@ namespace StarterAssets
 		public void OnPullOutClipboard(InputValue value)
 		{
 			checklistPull = value.isPressed;
+		}
+
+		public void OnTeleport(InputValue value)
+		{
+			teleport = value.isPressed;
 		}
 #endif
 

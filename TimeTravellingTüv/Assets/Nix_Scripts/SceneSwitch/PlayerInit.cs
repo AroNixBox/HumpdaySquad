@@ -15,18 +15,19 @@ public class PlayerInit : MonoBehaviour
     [Header("Values")]
     [SerializeField] private AudioClip startTPClip;
     [SerializeField] private AudioClip endTPClip;
-
+    private Interact _interact;
     
     private void Awake()
     {
         _firstPersonController = GetComponent<FirstPersonController>();
+        _interact = FindObjectOfType<Interact>();
     }
     private void Update()
     {
         if (!Input.GetKeyDown(KeyCode.F5)){ return; }
         if(!_firstPersonController.Grounded) { return; }
         if(_firstPersonController.JumpTimeoutDelta > 0f) { return; }
-        
+        if(_interact.IsInteracting) { return; }
 
         StartCoroutine(TeleportVFX());
     }

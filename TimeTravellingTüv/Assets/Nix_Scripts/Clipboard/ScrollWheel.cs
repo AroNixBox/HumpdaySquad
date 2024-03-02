@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using StarterAssets;
 using UnityEngine;
@@ -8,6 +9,13 @@ public class ScrollWheel : MonoBehaviour
     private int _selectedIndex = 0;
     [SerializeField] private StarterAssetsInputs input;
     [SerializeField] private UIClipboard uiClipboard;
+    private Interact _interact;
+
+    private void Awake()
+    {
+        _interact = FindObjectOfType<Interact>();
+    }
+
     private IEnumerator Start()
     {
         yield return null;
@@ -17,6 +25,11 @@ public class ScrollWheel : MonoBehaviour
 
     private void Update()
     {
+        //Cant interact with Checklist when interacting with other objects
+        if (_interact.IsInteracting) return;
+        
+        //TODO: add a pullout to the Checklist
+        
         ProcessScrollInput();
 
         if (input.mark)

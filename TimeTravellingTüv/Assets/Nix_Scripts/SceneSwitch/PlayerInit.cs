@@ -15,16 +15,20 @@ public class PlayerInit : MonoBehaviour
     [Header("Values")]
     [SerializeField] private AudioClip startTPClip;
     [SerializeField] private AudioClip endTPClip;
+    private StarterAssetsInputs _input;
     private Interact _interact;
     
     private void Awake()
     {
         _firstPersonController = GetComponent<FirstPersonController>();
         _interact = FindObjectOfType<Interact>();
+        _input = FindObjectOfType<StarterAssetsInputs>();
     }
     private void Update()
     {
-        if (!Input.GetKeyDown(KeyCode.F5)){ return; }
+        if (!_input.teleport) { return; }
+        _input.teleport = false;
+        
         if(!_firstPersonController.Grounded) { return; }
         if(_firstPersonController.JumpTimeoutDelta > 0f) { return; }
         if(_interact.IsInteracting) { return; }

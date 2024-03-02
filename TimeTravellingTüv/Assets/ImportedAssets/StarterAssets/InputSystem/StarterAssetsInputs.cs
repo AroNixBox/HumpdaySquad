@@ -18,6 +18,7 @@ namespace StarterAssets
 		public bool checklistPull;
 		public bool teleport;
 		public bool resetInspect;
+		public bool cancelAction;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -78,6 +79,11 @@ namespace StarterAssets
 		public void OnResetInspect(InputValue value)
 		{
 			resetInspect = value.isPressed;
+		}
+
+		public void OnCancelAction(InputValue value)
+		{
+			cancelAction = value.isPressed;
 		}
 #endif
 

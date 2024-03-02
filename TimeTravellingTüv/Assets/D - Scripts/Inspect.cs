@@ -119,10 +119,12 @@ public class Inspect : MonoBehaviour, IInteraction
 
         if (_stopInspecting)
         {
-            if (Input.GetKeyDown(KeyCode.Escape) || _starterAssetsInputs.interact)
+            if (Input.GetKeyDown(KeyCode.Escape) || _starterAssetsInputs.interact || _starterAssetsInputs.cancelAction)
             {
                 _starterAssetsInputs.interact = false;
-                
+                _starterAssetsInputs.cancelAction = false;
+
+
                 ReturnToDefault();
                 _stopInspecting = false;
                 StartCoroutine(EnableInteract());

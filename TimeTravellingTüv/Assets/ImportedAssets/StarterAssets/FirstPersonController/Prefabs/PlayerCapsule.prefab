@@ -5118,7 +5118,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveSpeed: 4
   SprintSpeed: 6
-  RotationSpeed: 500
+  RotationSpeed: 1
   SpeedChangeRate: 10
   JumpHeight: 1.2
   Gravity: -15
@@ -5130,6 +5130,7 @@ MonoBehaviour:
   GroundLayers:
     serializedVersion: 2
     m_Bits: 1
+  isPaused: 0
   CinemachineCameraTarget: {fileID: 4135013735270702863}
   TopClamp: 89
   BottomClamp: -89

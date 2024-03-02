@@ -134,43 +134,25 @@ namespace StarterAssets
 			Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers, QueryTriggerInteraction.Ignore);
 		}
 
-		public void InitializeCameraRotation(Quaternion cameraRootRotation, Quaternion playerCapsuleRotation)
-		{
-			transform.rotation = playerCapsuleRotation;
-			CinemachineCameraTarget.transform.rotation = cameraRootRotation;
-		}
-
 
 		private void CameraRotation()
 		{
 			if (_input.look.sqrMagnitude >= _threshold)
 			{
-				float mouseX = _input.look.x * RotationSpeed * Time.deltaTime;
-				float mouseY = _input.look.y * RotationSpeed * Time.deltaTime;
+				//Don't multiply mouse input by Time.deltaTime
+				float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
+				
+				_cinemachineTargetPitch += _input.look.y * RotationSpeed * deltaTimeMultiplier;
+				_rotationVelocity = _input.look.x * RotationSpeed * deltaTimeMultiplier;
 
-				Quaternion playerRotation = Quaternion.Euler(0f, mouseX, 0f);
-				transform.rotation *= playerRotation;
+				// clamp our pitch rotation
+				_cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
 
-				Quaternion cameraRotation = Quaternion.Euler(mouseY, 0f, 0f);
-				Quaternion currentRotation = CinemachineCameraTarget.transform.localRotation * cameraRotation;
-				currentRotation = ClampRotationAroundXAxis(currentRotation);
-
-				CinemachineCameraTarget.transform.localRotation = currentRotation;
+				CinemachineCameraTarget.transform.localRotation = Quaternion.Euler(_cinemachineTargetPitch, 0.0f, 0.0f);
+				
+				// rotate the player left and right
+				transform.Rotate(Vector3.up * _rotationVelocity);
 			}
-		}
-
-		private Quaternion ClampRotationAroundXAxis(Quaternion q)
-		{
-			q.x /= q.w;
-			q.y /= q.w;
-			q.z /= q.w;
-			q.w = 1.0f;
-
-			float angleX = 2.0f * Mathf.Rad2Deg * Mathf.Atan(q.x);
-			angleX = Mathf.Clamp(angleX, BottomClamp, TopClamp);
-			q.x = Mathf.Tan(0.5f * Mathf.Deg2Rad * angleX);
-
-			return q;
 		}
 
 		private void Move()

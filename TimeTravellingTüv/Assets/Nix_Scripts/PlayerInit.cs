@@ -7,38 +7,22 @@ using UnityEngine.Serialization;
 
 public class PlayerInit : MonoBehaviour
 {
-    [SerializeField] private Transform playerCapsuleTransform;
-    [SerializeField] private Transform playerCameraRootTransform;
-    [SerializeField] private FirstPersonController firstPersonController;
+    private FirstPersonController _firstPersonController;
     [SerializeField] private ParticleSystem tpVFX;
-    private CharacterController _characterController;
-    private void Start()
+    
+    private void Awake()
     {
-        _characterController = GetComponent<CharacterController>();
-        LoadPlayerStateAndSetPosition();
+        _firstPersonController = GetComponent<FirstPersonController>();
     }
-
     private void Update()
     {
         if (!Input.GetKeyDown(KeyCode.F5)){ return; }
-        if(!firstPersonController.Grounded) { return; }
-        if(firstPersonController.JumpTimeoutDelta > 0f) { return; }
+        if(!_firstPersonController.Grounded) { return; }
+        if(_firstPersonController.JumpTimeoutDelta > 0f) { return; }
         
-        firstPersonController.isPaused = true;
+        _firstPersonController.isPaused = true;
         tpVFX.Play();
-        SceneManager.Instance.ChangeScene(transform.position, playerCameraRootTransform.rotation, playerCapsuleTransform.rotation);
-    }
-
-    private void LoadPlayerStateAndSetPosition()
-    {
-        (Vector3 playerCapsulePosition, Quaternion cameraRootRotation, Quaternion playerCapsuleRotation) = SceneManager.Instance.LoadPlayerState();
-        
-        //Nothing to load
-        if(playerCapsulePosition == Vector3.zero && cameraRootRotation == Quaternion.identity && playerCapsuleRotation == Quaternion.identity) { return; }
-
-        _characterController.Move(playerCapsulePosition);
-        firstPersonController.InitializeCameraRotation(cameraRootRotation, playerCapsuleRotation);
-        tpVFX.Play();
-        firstPersonController.isPaused = false;
+        SceneManager.Instance.ChangeLevel();
+        _firstPersonController.isPaused = false;
     }
 }

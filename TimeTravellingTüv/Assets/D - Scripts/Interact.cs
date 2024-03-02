@@ -1,25 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using StarterAssets;
 using UnityEngine;
-
-public interface IInteraction
-{
-    void Interacter();
-}
-
 public class Interact : MonoBehaviour
 {
+    private StarterAssetsInputs _starterAssetsInputs;
     public bool IsInteracting;
+
+    private void Awake()
+    {
+        _starterAssetsInputs = FindObjectOfType<StarterAssetsInputs>();
+    }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && !IsInteracting)
+        if (_starterAssetsInputs.interact && !IsInteracting)
         {
+            _starterAssetsInputs.interact = false;
             interact();
         }
     }
 
-    public void interact()
+    private void interact()
     {
         float Distance = 2f;
         Ray ray = new Ray(transform.position, transform.forward);
@@ -32,4 +33,8 @@ public class Interact : MonoBehaviour
             }
         }
     }
+}
+public interface IInteraction
+{
+    void Interacter();
 }

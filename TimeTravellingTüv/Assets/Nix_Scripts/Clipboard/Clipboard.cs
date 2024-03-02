@@ -33,9 +33,4 @@ public class Clipboard : MonoBehaviour
         
         return clipboardEntryStatus[index] == passedInStatus;
     }
-
-    public void GetClipboardResults()
-    {
-        
-    }
 }

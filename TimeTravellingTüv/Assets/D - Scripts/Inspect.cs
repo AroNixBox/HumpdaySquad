@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,14 +8,13 @@ using StarterAssets;
 
 public class Inspect : MonoBehaviour, IInteraction
 {
-    private Vector3 Position;
-    private Quaternion Rotation;
-    private Vector3 Scale;
-
-    private bool Inspecting;
-    private bool Returning;
-    private bool StartInspecting;
-    private bool StopInspecting;
+    private Vector3 _position;
+    private Quaternion _rotation;
+    private Vector3 _scale;
+    private bool _inspecting;
+    private bool _returning;
+    private bool _startInspecting;
+    private bool _stopInspecting;
 
     [Tooltip("(This Value will be set automatically in-script) " +
         "Value for rotating object along local x-axis")]
@@ -37,32 +37,42 @@ public class Inspect : MonoBehaviour, IInteraction
 
     [SerializeField] private GameObject Player;
     [SerializeField] private GameObject Camera;
-    private FirstPersonController CC;
+    
+    private FirstPersonController _characterController;
+    private StarterAssetsInputs _starterAssetsInputs;
     private Interact _interact;
 
     [Tooltip("Size the object will inherit when inspecting (needed for large objects (needs to be manually added")]
     public Vector3 InspectSize;
+
+    private void Awake()
+    {
+        _characterController = Player.GetComponent<FirstPersonController>();
+        _interact = Camera.GetComponent<Interact>();
+        _starterAssetsInputs = Player.GetComponent<StarterAssetsInputs>();
+    }
+
     void Start()
     {
-        Position = transform.position;
-        Rotation = transform.rotation;
-        Scale = transform.localScale;
+        _position = transform.position;
+        _rotation = transform.rotation;
+        _scale = transform.localScale;
 
         MaxSize = InspectSize * 5f;
         MinSize = InspectSize / 5f;
     }
 
-    void Update()
+    private void Update()
     {
-        if (Inspecting)
+        if (_inspecting)
         {
-            RotX = -Input.GetAxis("Mouse X");
-            RotY = Input.GetAxis("Mouse Y");
-            Zoom = Input.GetAxis("Mouse ScrollWheel") * transform.localScale.x;
+            RotX = -_starterAssetsInputs.look.x;
+            RotY = -_starterAssetsInputs.look.y;
+            float targetZoom = _starterAssetsInputs.scroll * transform.localScale.x / 500;
+            Zoom = Mathf.Lerp(Zoom, targetZoom, .1f);
 
-            CC = Player.GetComponent<FirstPersonController>();
-            CC.enabled = false;
-            _interact = Camera.GetComponent<Interact>();
+
+            _characterController.enabled = false;
             _interact.IsInteracting = true;
 
             if (transform.position != Camera.transform.position + Camera.transform.forward * 1.5f)
@@ -71,7 +81,7 @@ public class Inspect : MonoBehaviour, IInteraction
                 + Camera.transform.forward * 1.5f, 0.1f);
             }
 
-            if (StartInspecting) // Change rotation and scale of object to inspect values at start of inspecting
+            if (_startInspecting) // Change rotation and scale of object to inspect values at start of inspecting
             {
                 if (transform.localScale != InspectSize)
                 {
@@ -81,52 +91,64 @@ public class Inspect : MonoBehaviour, IInteraction
                 if (transform.position == Camera.transform.position + Camera.transform.forward * 1.5f ||
                     transform.localScale == InspectSize || transform.rotation == Camera.transform.rotation)
                 {
-                    StartInspecting = false;
+                    _startInspecting = false;
                 }
             }
 
-            if (Input.GetMouseButton(0)) // Holding LMB and moving the mouse will rotate the object (along local-axis)
-            {
-                transform.rotation = Quaternion.AngleAxis(RotX * RotSpeed, transform.up) *
-                Quaternion.AngleAxis(RotY * RotSpeed, transform.right) *
-                transform.rotation;
-            }
-            if (Input.GetKeyDown(KeyCode.R)) // This will set the rotation and scale of the object to default inspect
-            {
-                transform.rotation = Camera.transform.rotation;
-                transform.localScale = InspectSize;
-            }
-            transform.localScale = new Vector3(Mathf.Clamp(transform.localScale.x + Zoom, MinSize.x, MaxSize.x), // Zoom in and out of an object
-            Mathf.Clamp(transform.localScale.y + Zoom, MinSize.y, MaxSize.y), Mathf.Clamp(transform.localScale.z + Zoom, MinSize.z, MaxSize.z));
+            transform.rotation = Quaternion.AngleAxis(RotX * RotSpeed, transform.up) *
+                                 Quaternion.AngleAxis(RotY * RotSpeed, transform.right) *
+                                 transform.rotation;
+            
+            //TODO: Removed this for now because we dont need it
+            // if (Input.GetKeyDown(KeyCode.R)) // This will set the rotation and scale of the object to default inspect
+            // {
+            //     transform.rotation = Camera.transform.rotation;
+            //     transform.localScale = InspectSize;
+            // }
+            
+            // Zoom in and out of an object
+            transform.localScale = new Vector3(
+                Mathf.Clamp(transform.localScale.x + Zoom, MinSize.x, MaxSize.x), 
+                Mathf.Clamp(transform.localScale.y + Zoom, MinSize.y, MaxSize.y), 
+                Mathf.Clamp(transform.localScale.z + Zoom, MinSize.z, MaxSize.z));
         }
 
-        if (StopInspecting)
+        if (_stopInspecting)
         {
-            if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.Escape) || _starterAssetsInputs.interact)
             {
+                _starterAssetsInputs.interact = false;
+                
                 ReturnToDefault();
-                StopInspecting = false;
+                _stopInspecting = false;
                 StartCoroutine(EnableInteract());
             }
         }
-        if (Returning) // Set Transform of object to state before inspect
+        if (_returning) // Set Transform of object to state before inspect
         {
-            transform.SetPositionAndRotation(Vector3.Lerp(transform.position, Position, 0.5f) 
-            , Quaternion.Lerp(transform.rotation, Rotation, 0.5f));
-            transform.localScale = Vector3.Lerp(transform.localScale, Scale, 0.5f);
+            transform.SetPositionAndRotation(
+                Vector3.Lerp(transform.position, 
+                    _position, 
+                    0.5f), 
+                Quaternion.Lerp(
+                    transform.rotation, 
+                    _rotation, 
+                    0.5f));
+            
+            transform.localScale = Vector3.Lerp(transform.localScale, _scale, 0.5f);
 
-            if (transform.position == Position || transform.rotation == Rotation
-                || transform.localScale == Scale)
+            if (transform.position == _position || transform.rotation == _rotation
+                || transform.localScale == _scale)
             {
-                Returning = false;
+                _returning = false;
             }
         }
     }
 
     public void Interacter()
     {
-        StartInspecting = true;
-        Inspecting = true;
+        _startInspecting = true;
+        _inspecting = true;
         transform.rotation = Quaternion.Lerp(transform.rotation, Camera.transform.rotation, 0.5f);
         StartCoroutine(EnableBool());
     }
@@ -134,7 +156,7 @@ public class Inspect : MonoBehaviour, IInteraction
     private IEnumerator EnableBool()
     {
         yield return new WaitForSeconds(0.2f);
-        StopInspecting = true;
+        _stopInspecting = true;
     }
 
     private IEnumerator EnableInteract() 
@@ -145,8 +167,8 @@ public class Inspect : MonoBehaviour, IInteraction
 
     void ReturnToDefault()
     {
-        Returning = true;
-        Inspecting = false;
-        CC.enabled = true;
+        _returning = true;
+        _inspecting = false;
+        _characterController.enabled = true;
     }
 }

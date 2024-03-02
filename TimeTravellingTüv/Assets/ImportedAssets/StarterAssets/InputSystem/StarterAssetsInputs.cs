@@ -14,6 +14,7 @@ namespace StarterAssets
 		public bool sprint;
 		public bool mark;
 		public float scroll;
+		public bool interact;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -54,6 +55,11 @@ namespace StarterAssets
 		public void OnMark(InputValue value)
 		{
 			mark = value.isPressed;
+		}
+		
+		public void OnInteract(InputValue value)
+		{
+			interact = value.isPressed;
 		}
 #endif
 

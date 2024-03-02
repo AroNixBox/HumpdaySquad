@@ -5,16 +5,20 @@ public class Interact : MonoBehaviour
 {
     private StarterAssetsInputs _starterAssetsInputs;
     private PhysicalClipboard _physicalClipboard;
+    private PlayerInit _playerInit;
     public bool IsInteracting;
 
     private void Awake()
     {
         _starterAssetsInputs = FindObjectOfType<StarterAssetsInputs>();
         _physicalClipboard = FindObjectOfType<PhysicalClipboard>();
+        _playerInit = FindObjectOfType<PlayerInit>();
     }
 
     private void Update()
     {
+        if(_playerInit.IsTeleporting) return;
+        
         if (_physicalClipboard.IsClipboardEquipped)
         {
             _starterAssetsInputs.interact = false;

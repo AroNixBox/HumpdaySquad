@@ -15,6 +15,7 @@ public class PlayerInit : MonoBehaviour
     [Header("Values")]
     [SerializeField] private AudioClip startTPClip;
     [SerializeField] private AudioClip endTPClip;
+    public bool IsTeleporting { get; private set; }
     private StarterAssetsInputs _input;
     private Interact _interact;
     
@@ -37,6 +38,7 @@ public class PlayerInit : MonoBehaviour
     }
     private IEnumerator TeleportVFX()
     {
+        IsTeleporting = true;
         tpVFX.SetActive(true);
         _firstPersonController.isPaused = true;
         
@@ -52,5 +54,6 @@ public class PlayerInit : MonoBehaviour
         
         _firstPersonController.isPaused = false;
         tpVFX.SetActive(false);
+        IsTeleporting = false;
     }
 }

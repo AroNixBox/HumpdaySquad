@@ -12,6 +12,7 @@ public class ClipboardEntry : MonoBehaviour
     [SerializeField] private TextMeshProUGUI bulletpoint;
     [SerializeField] private Image checkmark;
     [SerializeField] private Image crossmark;
+    [SerializeField] private GameObject markTint;
     
     public void Init(string text)
     {
@@ -19,7 +20,7 @@ public class ClipboardEntry : MonoBehaviour
     }
     public void SetOutline(bool active)
     {
-        GetComponentInChildren<Outline>().enabled = active;
+        markTint.SetActive(active);
     }
 
     public void OccupySlot()

@@ -38,7 +38,7 @@ public class Inspect : MonoBehaviour, IInteraction
         {
             CC = Player.GetComponent<FirstPersonController>();
             CC.enabled = false;
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.F))
             {
                 ReturnToDefault();
             }
@@ -48,19 +48,29 @@ public class Inspect : MonoBehaviour, IInteraction
                 Quaternion.AngleAxis(RotY * RotSpeed, transform.right) *
                 transform.rotation;
             }
-            transform.position = Vector3.Lerp(transform.position,Camera.transform.position 
-            + Camera.transform.forward * 1.5f, 0.1f);
-            transform.localScale = Vector3.Lerp(transform.localScale, InspectSize, 0.5f);
-        }
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                transform.rotation = Camera.transform.rotation;
+            }
 
+            if (transform.position != Camera.transform.position + Camera.transform.forward * 1.5f)
+            {
+                transform.position = Vector3.Lerp(transform.position, Camera.transform.position
+                + Camera.transform.forward * 1.5f, 0.1f);
+            }
+            if (transform.localScale != InspectSize)
+            {
+                transform.localScale = Vector3.Lerp(transform.localScale, InspectSize, 0.5f);
+            }
+        }
         if (Returning)
         {
             transform.SetPositionAndRotation(Vector3.Lerp(transform.position, Position, 0.5f)
             , Quaternion.Lerp(transform.rotation, Rotation, 0.5f));
             transform.localScale = Vector3.Lerp(transform.localScale, Scale, 0.5f);
 
-            if (transform.position == Position && transform.rotation == Rotation
-                && transform.localScale == Scale)
+            if (transform.position == Position || transform.rotation == Rotation
+                || transform.localScale == Scale)
             {
                 Returning = false;
             }
@@ -70,6 +80,7 @@ public class Inspect : MonoBehaviour, IInteraction
     public void Interacter()
     {
         Inspecting = true;
+        transform.rotation = Quaternion.Lerp(transform.rotation, Camera.transform.rotation, 0.5f);
     }
 
     void ReturnToDefault()

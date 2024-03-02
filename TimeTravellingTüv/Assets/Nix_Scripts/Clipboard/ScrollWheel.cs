@@ -23,11 +23,6 @@ public class ScrollWheel : MonoBehaviour
         {
             ProcessMarkInput();
         }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            Debug.Log($"You got: {uiClipboard.DocumentPoints()} Points");
-        }
     }
 
     private void ProcessScrollInput()

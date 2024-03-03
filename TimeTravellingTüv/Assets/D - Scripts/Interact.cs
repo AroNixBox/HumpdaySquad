@@ -24,6 +24,7 @@ public class Interact : MonoBehaviour
         if (_physicalClipboard.IsClipboardEquipped)
         {
             _starterAssetsInputs.interact = false;
+            _playerInteractUI.Hide();
             return;
         }
         //Can interact with objects

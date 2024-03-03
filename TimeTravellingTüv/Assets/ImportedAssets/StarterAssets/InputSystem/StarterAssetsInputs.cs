@@ -19,6 +19,7 @@ namespace StarterAssets
 		public bool teleport;
 		public bool resetInspect;
 		public bool cancelAction;
+		public bool menu;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -84,6 +85,11 @@ namespace StarterAssets
 		public void OnCancelAction(InputValue value)
 		{
 			cancelAction = value.isPressed;
+		}
+
+		public void OnMenu(InputValue value)
+		{
+			menu = value.isPressed;
 		}
 #endif
 

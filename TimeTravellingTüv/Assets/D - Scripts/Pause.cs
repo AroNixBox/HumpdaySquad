@@ -23,6 +23,8 @@ public class Pause : MonoBehaviour
         _starterAssetsInputs = FindObjectOfType<StarterAssetsInputs>();
         _interact = FindObjectOfType<Interact>();
         _eventSystem = FindObjectOfType<EventSystem>();
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()

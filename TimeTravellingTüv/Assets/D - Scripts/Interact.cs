@@ -28,10 +28,10 @@ public class Interact : MonoBehaviour
             return;
         }
         //Can interact with objects
-        float Distance = 2f;
+        var distance = 2f;
         Ray ray = new Ray(transform.position, transform.forward);
         
-        if (Physics.Raycast(ray, out RaycastHit hitInfo, Distance))
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, distance))
         {
             if (hitInfo.collider.gameObject.TryGetComponent(out IInteraction interactObject))
             {

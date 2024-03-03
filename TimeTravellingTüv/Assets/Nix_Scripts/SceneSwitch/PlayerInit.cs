@@ -31,6 +31,8 @@ public class PlayerInit : MonoBehaviour
         if (!_input.teleport) { return; }
         _input.teleport = false;
         
+        if (!TeleportDenyManager.Instance.CanTeleport()) { return; }
+        
         if(!_firstPersonController.Grounded) { return; }
         if(_firstPersonController.JumpTimeoutDelta > 0f) { return; }
         if(_interact.IsInteracting) { return; }

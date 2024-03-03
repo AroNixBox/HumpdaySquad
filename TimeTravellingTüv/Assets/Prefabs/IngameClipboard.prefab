@@ -203,13 +203,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <ClipBoardEntries>k__BackingField:
-  - Dominik
-  - Nard
-  - Susi
-  - Nixon
-  - Vanessa
-  - Bobby
-  clipboardEntryStatus: 020000000200000001000000020000000200000001000000
+  - Was the Incident recorded?
+  - Were all Chemicals and Substances stored according to Regulations?
+  - Were the Guards and the Equipment sufficient for Regulations?
+  - "Was the Security-Personell prepared for Emergencies?\t"
+  - Were 3 Scientists present during Experiments?
+  clipboardEntryStatus: 0100000001000000020000000200000001000000
 --- !u!114 &6584014860959775591
 MonoBehaviour:
   m_ObjectHideFlags: 0

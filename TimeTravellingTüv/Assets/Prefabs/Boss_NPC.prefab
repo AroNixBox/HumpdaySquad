@@ -3168,11 +3168,17 @@ MonoBehaviour:
   chatBubbleTMP: {fileID: 4256720351012954934}
   chatParentImage: {fileID: 3791599403155981737}
   chat:
-  - Heres your Clipboard, check if they have made any misstakes, so we don't have
-    to give them our Money
-  - Are you sure you want to hand in your Cliboard?
-  - Are you sure sure sure you want to hand in your Cliboard?
-  - Are you sure sure sure sure you want to hand in your Cliboard?
+  - Alright Agent, we are here to assess the Damage done to this Facility. Our Goal
+    is to check if the Scientists here did mess up in any way.
+  - For that Purpose, you are equipped with a Device that lets you Travel between
+    2 different Timelines.
+  - The current Timeline is the Time before the Incident. The other Timeline is the
+    Time immediately after the Incident.
+  - Find out as much as you can and answer the Checklist on your Clipboard. I expect
+    the Clipboard to be answered, when you return it to me!
+  - Are you already done?
+  - Are you sure that you want to give me your Clipboard?
+  - '*Takes Clipboard* Alright, let me see.'
 --- !u!114 &8577213368627812225
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -46,6 +46,7 @@ public class Inspect : MonoBehaviour, IInteraction
 
     [Tooltip("Size the object will inherit when inspecting (needed for large objects (needs to be manually added")]
     public Vector3 InspectSize;
+    public float _objDistance = 1.5f;
 
     private void Awake()
     {
@@ -78,10 +79,10 @@ public class Inspect : MonoBehaviour, IInteraction
             float targetZoom = _starterAssetsInputs.scroll * transform.localScale.x / _divisor;
             Zoom = Mathf.Lerp(Zoom, targetZoom, .1f);
 
-            if (transform.position != _camera.transform.position + _camera.transform.forward * 1.5f)
+            if (transform.position != _camera.transform.position + _camera.transform.forward * _objDistance)
             {
                 transform.position = Vector3.Lerp(transform.position, _camera.transform.position
-                + _camera.transform.forward * 1.5f, 0.1f);
+                + _camera.transform.forward * _objDistance, 0.1f);
             }
 
             if (_startInspecting) // Change rotation and scale of object to inspect values at start of inspecting
@@ -91,7 +92,7 @@ public class Inspect : MonoBehaviour, IInteraction
                     transform.localScale = Vector3.Lerp(transform.localScale, InspectSize, 0.5f);
                 }
 
-                if (transform.position == _camera.transform.position + _camera.transform.forward * 1.5f ||
+                if (transform.position == _camera.transform.position + _camera.transform.forward * _objDistance ||
                     transform.localScale == InspectSize || transform.rotation == _camera.transform.rotation)
                 {
                     _startInspecting = false;

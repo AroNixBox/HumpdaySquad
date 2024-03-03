@@ -13,7 +13,6 @@ public class SceneManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); 
         }
         else
         {
@@ -37,5 +36,10 @@ public class SceneManager : MonoBehaviour
                 preLevel.SetActive(true);
                 break;
         }
+    }
+
+    public void RestartGame()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
     }
 }

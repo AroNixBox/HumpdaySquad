@@ -1931,9 +1931,9 @@ MonoBehaviour:
   m_fontSize: 0.2
   m_fontSizeBase: 0.2
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 0.2
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 0.01
+  m_fontSizeMax: 0.15
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
@@ -3065,6 +3065,7 @@ GameObject:
   - component: {fileID: 5144441164674957462}
   - component: {fileID: 8577213368627812225}
   - component: {fileID: 4396382822924483684}
+  - component: {fileID: 4857359053927395494}
   m_Layer: 0
   m_Name: Boss_NPC
   m_TagString: Untagged
@@ -3157,6 +3158,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69291929ba6e8e44aa278e0a5deb003a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  talkClips:
+  - {fileID: 8300000, guid: 1d92f700b0774c74bbefa4fa6bcb663d, type: 3}
+  - {fileID: 8300000, guid: e06457e91536ef143bf235b1d6c41977, type: 3}
+  - {fileID: 8300000, guid: 98b1febe50ba8724b8385f9ce38125fd, type: 3}
+  - {fileID: 8300000, guid: 9748cf2a6e31bb841beee6e1da12f908, type: 3}
+  - {fileID: 8300000, guid: 97cd40475b801144a97de26559e453a8, type: 3}
+  - {fileID: 8300000, guid: 0aaffc7d2b17c954e910c0816924a0d0, type: 3}
   chatBubbleTMP: {fileID: 4256720351012954934}
   chatParentImage: {fileID: 3791599403155981737}
   chat:
@@ -3195,6 +3203,129 @@ MonoBehaviour:
   - m_Rig: {fileID: 5495007046937420458}
     m_Active: 1
   m_Effectors: []
+--- !u!82 &4857359053927395494
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7002056584694454160}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.8
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 15
+  Pan2D: 0
+  rolloffMode: 1
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.06666667
+      value: 1
+      inSlope: -15.005997
+      outSlope: -15.005997
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.22953238
+      value: 0.5783081
+      inSlope: -3.7514992
+      outSlope: -3.7514992
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.26666668
+      value: 0.25
+      inSlope: -0.9378748
+      outSlope: -0.9378748
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.53333336
+      value: 0.125
+      inSlope: -0.2344687
+      outSlope: -0.2344687
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0.06666667
+      inSlope: -0.06669331
+      outSlope: -0.06669331
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &7150961429748264155
 GameObject:
   m_ObjectHideFlags: 0

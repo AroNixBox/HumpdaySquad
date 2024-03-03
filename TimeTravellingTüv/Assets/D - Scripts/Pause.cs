@@ -2,9 +2,12 @@ using StarterAssets;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Pause : MonoBehaviour
 {
+    [SerializeField] private GameObject eSystem;
+    [SerializeField] private GameObject Button;
     [SerializeField] private GameObject Menu;
     [SerializeField] private GameObject Pause1;
     [SerializeField] private GameObject Pause2;
@@ -13,11 +16,13 @@ public class Pause : MonoBehaviour
     private FirstPersonController _FPS;
     private StarterAssetsInputs _starterAssetsInputs;
     private Interact _interact;
+    private EventSystem _eventSystem;
     private void Start()
     {
         _FPS = GetComponent<FirstPersonController>();
         _starterAssetsInputs = FindObjectOfType<StarterAssetsInputs>();
         _interact = FindObjectOfType<Interact>();
+        _eventSystem = FindObjectOfType<EventSystem>();
     }
 
     private void Update()
@@ -44,6 +49,8 @@ public class Pause : MonoBehaviour
             Pause4.SetActive(false);
         }
         Menu.SetActive(!activeMenu);
+        _eventSystem.firstSelectedGameObject = Button;
+        _eventSystem.SetSelectedGameObject(Button);
         Cursor.visible = !activeMenu;
         _FPS.enabled = activeMenu;
 

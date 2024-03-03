@@ -63,13 +63,6 @@ public class Interact : MonoBehaviour
             _playerInteractUI.Hide();
         }
     }
-
-    private void interact(RaycastHit hitInfo)
-    {
-        
-            
-
-    }
 }
 public interface IInteraction
 {

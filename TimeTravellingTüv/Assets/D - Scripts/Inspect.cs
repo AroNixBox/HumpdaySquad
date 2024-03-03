@@ -185,16 +185,16 @@ public class Inspect : MonoBehaviour, IInteraction
         }
     }
 
-    bool IsControllerConnected()
+    private bool IsControllerConnected()
     {
         string[] joysticks = Input.GetJoystickNames();
         foreach (string joystick in joysticks)
         {
             if (!string.IsNullOrEmpty(joystick))
             {
-                return true; // Mindestens ein Controller ist angeschlossen
+                return true;
             }
         }
-        return false; // Keine Controller angeschlossen
+        return false;
     }
 }

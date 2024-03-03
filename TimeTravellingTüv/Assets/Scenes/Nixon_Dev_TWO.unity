@@ -1413,6 +1413,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9005220659476430821, guid: 2d3a85ecde41a8246a79669975912b74,
         type: 3}
+      propertyPath: field of view
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 9005220659476430821, guid: 2d3a85ecde41a8246a79669975912b74,
+        type: 3}
       propertyPath: far clip plane
       value: 500
       objectReference: {fileID: 0}
@@ -2025,10 +2030,10 @@ SceneRoots:
   - {fileID: 798428237}
   - {fileID: 60889539378096550}
   - {fileID: 7288094137546172433}
-  - {fileID: 5393215579111688471}
   - {fileID: 1979352518}
   - {fileID: 746329221}
   - {fileID: 6332054855863098772}
   - {fileID: 343765616}
   - {fileID: 3159633828198484595}
   - {fileID: 5453848998347870262}
+  - {fileID: 5393215579111688471}

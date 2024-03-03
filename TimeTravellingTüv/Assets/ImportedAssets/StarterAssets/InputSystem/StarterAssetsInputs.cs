@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
@@ -19,6 +20,7 @@ namespace StarterAssets
 		public bool teleport;
 		public bool resetInspect;
 		public bool cancelAction;
+		public bool menu;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -85,10 +87,14 @@ namespace StarterAssets
 		{
 			cancelAction = value.isPressed;
 		}
+        public void OnMenu(InputValue value)
+        {
+            menu = value.isPressed;
+        }
 #endif
 
 
-		public void MoveInput(Vector2 newMoveDirection)
+        public void MoveInput(Vector2 newMoveDirection)
 		{
 			move = newMoveDirection;
 		} 

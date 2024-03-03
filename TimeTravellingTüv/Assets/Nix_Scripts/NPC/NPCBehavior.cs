@@ -46,7 +46,7 @@ public class NPCBehavior : MonoBehaviour, ITalkable
 
     private void Talk()
     {
-        _audioSource.PlayOneShot(talkClips[_currentChatIndex] != null
+        _audioSource.PlayOneShot(_currentChatIndex < talkClips.Length
             ? talkClips[_currentChatIndex]
             : talkClips[Random.Range(0, talkClips.Length)]);
         
@@ -60,7 +60,6 @@ public class NPCBehavior : MonoBehaviour, ITalkable
             StartCoroutine(RestartGame());
             return;
         }
-
         _typingCoroutine = StartCoroutine(TypeSentence(chat[_currentChatIndex]));
         _currentChatIndex++;
     }

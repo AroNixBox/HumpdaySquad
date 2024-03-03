@@ -20,7 +20,10 @@ public class Interact : MonoBehaviour
     private void Update()
     {
         if(_playerInit.IsTeleporting) return;
-        
+        if (_starterAssetsInputs.interact && _starterAssetsInputs.move != Vector2.zero)
+        {
+            _starterAssetsInputs.interact = false;
+        }
         if (_physicalClipboard.IsClipboardEquipped)
         {
             _starterAssetsInputs.interact = false;

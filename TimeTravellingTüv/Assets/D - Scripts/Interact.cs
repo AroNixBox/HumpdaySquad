@@ -42,6 +42,10 @@ public class Interact : MonoBehaviour
             {
                 interactObject.Interacter();
             }
+            else if (hitInfo.collider.gameObject.TryGetComponent(out ITalkable interactableNPC))
+            {
+                interactableNPC.Interact(transform);
+            }
         }
     }
 }

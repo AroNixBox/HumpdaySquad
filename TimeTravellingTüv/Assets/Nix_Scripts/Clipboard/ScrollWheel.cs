@@ -67,6 +67,7 @@ public class ScrollWheel : MonoBehaviour
         var entryToMark = uiClipboard.Entries[_selectedIndex];
         if(entryToMark == null) return;
         
+        
         entryToMark.OccupySlot();
     }
 }

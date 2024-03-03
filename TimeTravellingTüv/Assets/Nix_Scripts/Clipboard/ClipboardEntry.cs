@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,7 +14,15 @@ public class ClipboardEntry : MonoBehaviour
     [SerializeField] private Image checkmark;
     [SerializeField] private Image crossmark;
     [SerializeField] private GameObject markTint;
-    
+    [SerializeField] private AudioClip markSound;
+    [SerializeField] private AudioClip crossSound;
+    private AudioSource _audioSource;
+
+    private void Awake()
+    {
+        _audioSource = GetComponent<AudioSource>();
+    }
+
     public void Init(string text)
     {
         bulletpoint.text = text;
@@ -30,12 +39,14 @@ public class ClipboardEntry : MonoBehaviour
             //First ever occupy, since it was 0 before
             case 0:
                 _occupiedIndex++;
+                _audioSource.PlayOneShot(markSound);
                 checkmark.gameObject.SetActive(true);
                 crossmark.gameObject.SetActive(false);
                 break;
             
             case 1:
                 _occupiedIndex++;
+                _audioSource.PlayOneShot(crossSound);
                 checkmark.gameObject.SetActive(false);
                 crossmark.gameObject.SetActive(true);
                 break;

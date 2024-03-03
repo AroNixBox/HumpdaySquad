@@ -687,7 +687,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerInput: {fileID: 0}
-  eSystem: {fileID: 1345291138}
   Button: {fileID: 1569964408}
 --- !u!114 &92573099
 MonoBehaviour:
@@ -2354,7 +2353,9 @@ MonoBehaviour:
     SoundFX
     (WeLoveIndies)
 
-    Animations (Mixamo)'
+    Animations (Mixamo)
+
+    SCP Logo (SCP Foundation)'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2032339f567bde146b32a51cb1425adf, type: 2}
   m_sharedMaterial: {fileID: 21694689038030200, guid: 2032339f567bde146b32a51cb1425adf,

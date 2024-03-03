@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
+using Nix_Scripts.SceneSwitch;
 using TMPro;
 using UnityEngine;
 
 public class NPCBehavior : MonoBehaviour, ITalkable
 {
     [SerializeField] private TextMeshProUGUI chatBubbleTMP;
-    
+    [SerializeField] private GameObject chatParentImage;
     private int _currentChatIndex;
     [SerializeField, TextArea(3, 10)] private string[] chat;
     private NPCHeadLookAt _npcHeadLookAt;
@@ -25,7 +26,7 @@ public class NPCBehavior : MonoBehaviour, ITalkable
         
         //ANimator Talk
         
-        chatBubbleTMP.gameObject.SetActive(true);
+        chatParentImage.SetActive(true);
         _npcHeadLookAt.LookAtPosition(playerHeadTransform);
         Talk();
     }

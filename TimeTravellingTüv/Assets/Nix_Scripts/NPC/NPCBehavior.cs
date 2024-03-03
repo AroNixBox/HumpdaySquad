@@ -50,12 +50,12 @@ public class NPCBehavior : MonoBehaviour, ITalkable
             ? talkClips[_currentChatIndex]
             : talkClips[Random.Range(0, talkClips.Length)]);
         
-        if (_currentChatIndex == chat.Length - 1)
+        if (_currentChatIndex == chat.Length)
         {
             //last chat
             StartCoroutine(TypeSentence("You got " +
                                         Clipboard.Instance.GetComponentInChildren<UIClipboard>().DocumentPoints() +
-                                        " out of 6 points, thanks for playing!"));
+                                        $" out of {Clipboard.Instance.GetComponentInChildren<UIClipboard>().Entries.Count} points, thanks for playing!"));
 
             StartCoroutine(RestartGame());
             return;

@@ -915,8 +915,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "TimeTravellingT\xDCV"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3199409928624324999b9336dd1ed8f3, type: 2}
-  m_sharedMaterial: {fileID: 21032597133445202, guid: 3199409928624324999b9336dd1ed8f3,
+  m_fontAsset: {fileID: 11400000, guid: 2032339f567bde146b32a51cb1425adf, type: 2}
+  m_sharedMaterial: {fileID: 21694689038030200, guid: 2032339f567bde146b32a51cb1425adf,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}

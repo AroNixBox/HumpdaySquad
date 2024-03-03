@@ -10,14 +10,13 @@ public class ControllerCheck : MonoBehaviour
 {
     [SerializeField] private PlayerInput _playerInput;
     private string _controlScheme;
-    [SerializeField] private GameObject eSystem;
     [SerializeField] private GameObject Button;
     private EventSystem _system;
 
     private void Start()
     {
-        _playerInput = GetComponent<PlayerInput>();
-        _system = eSystem.GetComponent<EventSystem>();
+        _playerInput = FindObjectOfType<PlayerInput>();
+        _system = FindObjectOfType<EventSystem>();
         _controlScheme = _playerInput.currentControlScheme;
     }
 

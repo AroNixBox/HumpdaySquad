@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class Inspect : MonoBehaviour, IInteractable
 {
-    [SerializeField] private Vector3 inspectSize = new (1f, 1f, 1f);
+    private Vector3 _inspectSize;
+    private float objectLerpSpeed = 10f;
     [SerializeField] private float objDistance = 1.5f;
     
     private Vector3 _originalPosition;
@@ -16,8 +17,8 @@ public class Inspect : MonoBehaviour, IInteractable
 
     private const float MouseRotSpeed = 500f;
     private const float ControllerRotSpeed = 1f;
-    private const float ControllerDivisor = 100f;
-    private const float MouseDivisor = 500f;
+    private const float ControllerDivisor = 1f;
+    private const float MouseDivisor = 10f;
     private GameObject _camera;
     private FirstPersonController _characterController;
     private StarterAssetsInputs _starterAssetsInputs;
@@ -29,8 +30,6 @@ public class Inspect : MonoBehaviour, IInteractable
         _characterController = FindObjectOfType<FirstPersonController>();
         _camera = Camera.main.gameObject;
         _starterAssetsInputs = FindObjectOfType<StarterAssetsInputs>();
-        
-        _starterAssetsInputs.OnInteractEvent += EndInspect;
     }
 
     private void OnDisable()
@@ -40,10 +39,14 @@ public class Inspect : MonoBehaviour, IInteractable
 
     void Start()
     {
+        _starterAssetsInputs.OnInteractEvent += EndInspect;
+
         _originalPosition = transform.position;
         _originalRotation = transform.rotation;
         _originalScale = transform.localScale;
         UpdateRotModBasedOnInputDevice();
+        
+        _inspectSize = GetInspectSize();
     }
 
     private void Update()
@@ -61,6 +64,7 @@ public class Inspect : MonoBehaviour, IInteractable
     public void Interact(Transform playerTransform)
     {
         if(_isInspecting) { return; }
+        if(_recentlyInspected) { return; }
         
         _recentlyInspected = true;
         _characterController.enabled = false;
@@ -92,17 +96,42 @@ public class Inspect : MonoBehaviour, IInteractable
         
         float scrollInput = _starterAssetsInputs.scroll;
         Vector3 targetScale = transform.localScale + Vector3.one * (scrollInput / _divisor);
-        transform.localScale = new Vector3(
-            Mathf.Clamp(targetScale.x, inspectSize.x / 3, inspectSize.x * 3),
-            Mathf.Clamp(targetScale.y, inspectSize.y / 3, inspectSize.y * 3),
-            Mathf.Clamp(targetScale.z, inspectSize.z / 3, inspectSize.z * 3));
+        targetScale = new Vector3(
+            Mathf.Clamp(targetScale.x, _inspectSize.x / 3, _inspectSize.x * 3),
+            Mathf.Clamp(targetScale.y, _inspectSize.y / 3, _inspectSize.y * 3),
+            Mathf.Clamp(targetScale.z, _inspectSize.z / 3, _inspectSize.z * 3));
+
+        transform.localScale = Vector3.Lerp(transform.localScale, targetScale, Time.deltaTime * objectLerpSpeed);
+    }
+    private Vector3 GetInspectSize()
+    {
+        var referenceCube = InspectReferenceManager.Instance.InspectReferenceCube;
+        if(referenceCube == null)
+        {
+            Debug.LogError("Reference cube is not assigned!");
+            return new Vector3(1, 1, 1);
+        }
+
+        var combinedBounds = new Bounds(transform.position, Vector3.zero);
+        var renderers = GetComponentsInChildren<MeshRenderer>();
+        foreach (var renderer in renderers)
+        {
+            combinedBounds.Encapsulate(renderer.bounds);
+        }
+    
+        var scaleFactor = Mathf.Min(
+            referenceCube.transform.localScale.x / combinedBounds.size.x,
+            referenceCube.transform.localScale.y / combinedBounds.size.y,
+            referenceCube.transform.localScale.z / combinedBounds.size.z);
+
+        return new Vector3(scaleFactor, scaleFactor, scaleFactor);
     }
 
     private void ReturnToOriginalState()
     {
-        transform.position = Vector3.Lerp(transform.position, _originalPosition, Time.deltaTime * 5f);
-        transform.rotation = Quaternion.Lerp(transform.rotation, _originalRotation, Time.deltaTime * 5f);
-        transform.localScale = Vector3.Lerp(transform.localScale, _originalScale, Time.deltaTime * 5f);
+        transform.position = Vector3.Lerp(transform.position, _originalPosition, Time.deltaTime * objectLerpSpeed);
+        transform.rotation = Quaternion.Lerp(transform.rotation, _originalRotation, Time.deltaTime * objectLerpSpeed);
+        transform.localScale = Vector3.Lerp(transform.localScale, _originalScale, Time.deltaTime * objectLerpSpeed);
     }
 
     private void UpdateRotModBasedOnInputDevice()

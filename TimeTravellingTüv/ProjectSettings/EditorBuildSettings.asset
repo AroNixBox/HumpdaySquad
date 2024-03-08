@@ -5,13 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
-    path: Assets/Scenes/Nixon_Dev_TWO.unity
-    guid: a660bb5cd3d04ac41a678ddeb488ebf3
+    path: Assets/Scenes/Title.unity
+    guid: ddc60e14c06d79049b9c134054a7039d
   - enabled: 1
-    path: Assets/Scenes/Nixon_Dev_ONE.unity
-    guid: 707acc8dffb72b144bb1ffbe1c965f3d
+    path: Assets/Scenes/Nard_Leveldesign.unity
+    guid: 963c0c67706a9f74bbe0fba55be56202
   m_configObjects: {}

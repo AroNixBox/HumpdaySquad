@@ -28,7 +28,7 @@ public class ScrollWheel : MonoBehaviour
     private void Update()
     {
         //Cant interact with Checklist when interacting with other objects
-        if (_interact.IsInteracting) return;
+        if (_interact.isInteracting) return;
         
         //TODO: add a pullout to the Checklist
         

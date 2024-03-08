@@ -29,11 +29,11 @@ public class Pause : MonoBehaviour
 
     private void Update()
     {
-        if (_starterAssetsInputs.menu && _interact.IsInteracting)
+        if (_starterAssetsInputs.menu && _interact.isInteracting)
         {
             _starterAssetsInputs.menu = false;
         }
-        if (_starterAssetsInputs.menu && !_interact.IsInteracting)
+        if (_starterAssetsInputs.menu && !_interact.isInteracting)
         {
             _starterAssetsInputs.menu = false;
             bool activeMenu = Menu.activeSelf;

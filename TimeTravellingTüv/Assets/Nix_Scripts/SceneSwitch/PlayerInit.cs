@@ -35,7 +35,7 @@ public class PlayerInit : MonoBehaviour
         
         if(!_firstPersonController.Grounded) { return; }
         if(_firstPersonController.JumpTimeoutDelta > 0f) { return; }
-        if(_interact.IsInteracting) { return; }
+        if(_interact.isInteracting) { return; }
 
         StartCoroutine(TeleportVFX());
     }

@@ -28109,7 +28109,7 @@ Transform:
   m_GameObject: {fileID: 8234440772170173064}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 1.105}
+  m_LocalPosition: {x: 0, y: 0, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -28235,6 +28235,7 @@ GameObject:
   - component: {fileID: 9013847276335747192}
   - component: {fileID: 8528095940991469273}
   - component: {fileID: 6988529963523400048}
+  - component: {fileID: 2735205802244173889}
   m_Layer: 8
   m_Name: PlayerCapsule
   m_TagString: Player
@@ -28488,7 +28489,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.4
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -28601,6 +28602,25 @@ MonoBehaviour:
   containerGameObject: {fileID: 5359794966404917787}
   keyboardKeyImage: {fileID: 7693865124465801553}
   controllerKeyImage: {fileID: 5182608308388340359}
+--- !u!114 &2735205802244173889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8616685848737228372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 113da44341d393940ab5bb17d81298d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eSystem: {fileID: 0}
+  Button: {fileID: 0}
+  Menu: {fileID: 0}
+  Pause1: {fileID: 0}
+  Pause2: {fileID: 0}
+  Pause3: {fileID: 0}
+  Pause4: {fileID: 0}
 --- !u!1 &8985222441143946994
 GameObject:
   m_ObjectHideFlags: 0

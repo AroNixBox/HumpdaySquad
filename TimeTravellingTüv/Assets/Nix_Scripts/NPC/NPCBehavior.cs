@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class NPCBehavior : MonoBehaviour, ITalkable
+public class NPCBehavior : MonoBehaviour, IInteractable
 {
     [Header("References")]
     [SerializeField] private AudioClip[] talkClips;

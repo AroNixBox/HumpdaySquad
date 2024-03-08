@@ -19,13 +19,13 @@ public class PhysicalClipboard : MonoBehaviour
 
     private void Update()
     {
-        if (_interact.IsInteracting)
+        if (_interact.isInteracting)
         {
             _input.checklistPull = false;
             return;
         }
-        if (!_interact.IsInteracting && _input.checklistPull || 
-            !_interact.IsInteracting && IsClipboardEquipped && _input.cancelAction)
+        if (!_interact.isInteracting && _input.checklistPull || 
+            !_interact.isInteracting && IsClipboardEquipped && _input.cancelAction)
         {
             _input.checklistPull = false; _input.cancelAction = false;
             IsClipboardEquipped = !IsClipboardEquipped;

@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 #if ENABLE_INPUT_SYSTEM
@@ -15,7 +16,7 @@ namespace StarterAssets
 		public bool sprint;
 		public bool mark;
 		public float scroll;
-		public bool interact;
+		public event Action OnInteractEvent;
 		public bool checklistPull;
 		public bool teleport;
 		public bool resetInspect;
@@ -65,7 +66,7 @@ namespace StarterAssets
 		
 		public void OnInteract(InputValue value)
 		{
-			interact = value.isPressed;
+			OnInteractEvent?.Invoke();
 		}
 		
 		public void OnPullOutClipboard(InputValue value)

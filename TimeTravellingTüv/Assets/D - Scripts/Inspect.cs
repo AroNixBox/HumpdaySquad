@@ -44,8 +44,6 @@ public class Inspect : MonoBehaviour, IInteractable
 
     private void ChangeModifiers(float rotMod, float divisor)
     {
-        Debug.Log("modifiers changed!");
-
         _rotMod = rotMod;
         _divisor = divisor;
     }

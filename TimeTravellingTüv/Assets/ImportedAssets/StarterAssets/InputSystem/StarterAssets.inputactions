@@ -458,6 +458,17 @@
                 },
                 {
                     "name": "",
+                    "id": "d98458f1-db8f-4a98-ada0-003700007842",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "CancelAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "e62211e3-eb59-4a20-b7ec-a9671044fcc1",
                     "path": "<Keyboard>/escape",
                     "interactions": "",

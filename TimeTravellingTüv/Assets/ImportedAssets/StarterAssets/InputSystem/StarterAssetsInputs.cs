@@ -17,6 +17,7 @@ namespace StarterAssets
 		public bool mark;
 		public float scroll;
 		public event Action OnInteractEvent;
+		public event Action OnCancelEvent;
 		public bool checklistPull;
 		public bool teleport;
 		public bool resetInspect;
@@ -87,6 +88,7 @@ namespace StarterAssets
 		public void OnCancelAction(InputValue value)
 		{
 			cancelAction = value.isPressed;
+			OnCancelEvent?.Invoke();
 		}
         public void OnMenu(InputValue value)
         {

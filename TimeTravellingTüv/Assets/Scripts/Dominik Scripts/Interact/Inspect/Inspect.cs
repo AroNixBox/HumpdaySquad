@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Linq;
+using Nix_Scripts.SceneSwitch;
 using StarterAssets;
 using UnityEngine;
 
@@ -19,21 +20,25 @@ public class Inspect : MonoBehaviour, IInteractable
     private GameObject _camera;
     private FirstPersonController _characterController;
     private StarterAssetsInputs _starterAssetsInputs;
+    private PlayerInit _playerInit;
+    private Interact _interact;
     private float _rotMod;
     private float _divisor;
 
     private void Awake()
     {
         _characterController = FindObjectsByType<FirstPersonController>(FindObjectsSortMode.None).FirstOrDefault();
+        _playerInit = FindObjectsByType<PlayerInit>(FindObjectsSortMode.None).FirstOrDefault();
         _camera = Camera.main.gameObject;
-        _starterAssetsInputs = FindObjectOfType<StarterAssetsInputs>();
+        _starterAssetsInputs = FindObjectsByType<StarterAssetsInputs>(FindObjectsSortMode.None).FirstOrDefault();
+        _interact = FindObjectsByType<Interact>(FindObjectsSortMode.None).FirstOrDefault();
+        
     }
     void Start()
     {
         _starterAssetsInputs.OnInteractEvent += EndInspect;
         _starterAssetsInputs.OnCancelEvent += EndInspect;
         InspectReferenceManager.Instance.OnModifiersChangedEvent += ChangeModifiers;
-
 
         _originalPosition = transform.position;
         _originalRotation = transform.rotation;
@@ -64,8 +69,11 @@ public class Inspect : MonoBehaviour, IInteractable
     public void Interact(Transform playerTransform)
     {
         if(_isInspecting) { return; }
+        if(_playerInit.IsTeleporting) return;
         if(_recentlyInspected) { return; }
         
+        _interact.isInteracting = true;
+
         _recentlyInspected = true;
         _characterController.enabled = false;
         _isInspecting = true;
@@ -82,6 +90,7 @@ public class Inspect : MonoBehaviour, IInteractable
         if(!_isInspecting) { return;}
         if(_recentlyInspected) { return; }
         
+        _interact.isInteracting = false;
         _isInspecting = false;
         _characterController.enabled = true;
     }
@@ -95,21 +104,24 @@ public class Inspect : MonoBehaviour, IInteractable
         transform.Rotate(_camera.transform.right, rotY, Space.World);
         
         float scrollInput = _starterAssetsInputs.scroll;
-        Vector3 targetScale = transform.localScale + Vector3.one * (scrollInput / _divisor);
+        var localScale = transform.localScale;
+        Vector3 targetScale = localScale + Vector3.one * (scrollInput / _divisor);
         targetScale = new Vector3(
             Mathf.Clamp(targetScale.x, _inspectSize.x / 3, _inspectSize.x * 3),
             Mathf.Clamp(targetScale.y, _inspectSize.y / 3, _inspectSize.y * 3),
             Mathf.Clamp(targetScale.z, _inspectSize.z / 3, _inspectSize.z * 3));
-
-        transform.localScale = Vector3.Lerp(transform.localScale, targetScale, Time.deltaTime * objectLerpSpeed);
+        
+        
+        localScale = Vector3.Lerp(localScale, targetScale, Time.deltaTime * objectLerpSpeed);
+        transform.localScale = localScale;
     }
     private Vector3 GetInspectSize()
     {
         var referenceCube = InspectReferenceManager.Instance.InspectReferenceCube;
-        if(referenceCube == null)
+        if (referenceCube == null)
         {
             Debug.LogError("Reference cube is not assigned!");
-            return new Vector3(1, 1, 1);
+            return transform.localScale;
         }
 
         var combinedBounds = new Bounds(transform.position, Vector3.zero);
@@ -118,13 +130,26 @@ public class Inspect : MonoBehaviour, IInteractable
         {
             combinedBounds.Encapsulate(renderer.bounds);
         }
-    
-        var scaleFactor = Mathf.Min(
-            referenceCube.transform.localScale.x / combinedBounds.size.x,
-            referenceCube.transform.localScale.y / combinedBounds.size.y,
-            referenceCube.transform.localScale.z / combinedBounds.size.z);
 
-        return new Vector3(scaleFactor, scaleFactor, scaleFactor);
+        Vector3 referenceScale = referenceCube.transform.localScale;
+        Vector3 objectScale = combinedBounds.size;
+
+        float scaleFactorX = referenceScale.x / objectScale.x;
+        float scaleFactorY = referenceScale.y / objectScale.y;
+        float scaleFactorZ = referenceScale.z / objectScale.z;
+
+        float scaleFactor = Mathf.Min(scaleFactorX, scaleFactorY, scaleFactorZ);
+
+        Vector3 scale = Vector3.one * scaleFactor;
+
+        // Überprüfen, ob die berechnete Skalierung gültig ist
+        if (float.IsNaN(scale.x) || float.IsInfinity(scale.x))
+        {
+            Debug.LogWarning("Invalid scale calculated for object: " + gameObject.name);
+            scale = Vector3.one;
+        }
+
+        return scale;
     }
 
     private void ReturnToOriginalState()
@@ -133,7 +158,7 @@ public class Inspect : MonoBehaviour, IInteractable
         transform.rotation = Quaternion.Lerp(transform.rotation, _originalRotation, Time.deltaTime * objectLerpSpeed);
         transform.localScale = Vector3.Lerp(transform.localScale, _originalScale, Time.deltaTime * objectLerpSpeed);
     }
-    private void OnDisable()
+    private void OnDestroy()
     {
         _starterAssetsInputs.OnInteractEvent -= EndInspect;
         _starterAssetsInputs.OnCancelEvent -= EndInspect;

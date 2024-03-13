@@ -29,12 +29,6 @@ public class InspectReferenceManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    private void Start()
-    {
-        _currentWaitTime = WaitTimeUntilNextInputDeviceCheck;
-    }
-
     private void LateUpdate()
     {
         _currentWaitTime -= Time.deltaTime;

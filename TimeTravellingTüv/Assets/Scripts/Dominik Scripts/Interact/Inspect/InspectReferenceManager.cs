@@ -39,8 +39,16 @@ public class InspectReferenceManager : MonoBehaviour
     }
     private void UpdateRotModBasedOnInputDevice()
     {
-        _rotMod = IsControllerConnected() ? ControllerRotSpeed : MouseRotSpeed;
-        _divisor = IsControllerConnected() ? ControllerDivisor : MouseDivisor;
+        float newRotMod = IsControllerConnected() ? ControllerRotSpeed : MouseRotSpeed;
+        float newDivisor = IsControllerConnected() ? ControllerDivisor : MouseDivisor;
+
+        if (newRotMod == _rotMod && newDivisor == _divisor)
+        {
+            return;
+        }
+
+        _rotMod = newRotMod;
+        _divisor = newDivisor;
         OnModifiersChangedEvent?.Invoke(_rotMod, _divisor);
     }
 

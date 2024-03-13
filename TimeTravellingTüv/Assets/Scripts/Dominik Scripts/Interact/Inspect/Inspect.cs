@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Nix_Scripts.SceneSwitch;
 using StarterAssets;
@@ -10,6 +11,10 @@ public class Inspect : MonoBehaviour, IInteractable
     private Vector3 _inspectSize;
     private float objectLerpSpeed = 10f;
     [SerializeField] private float objDistance = 1.5f;
+    
+    private int inspectLayer = 3;
+    private Dictionary<Transform, int> originalLayers;
+
     
     private Vector3 _originalPosition;
     private Quaternion _originalRotation;
@@ -71,12 +76,15 @@ public class Inspect : MonoBehaviour, IInteractable
         if(_isInspecting) { return; }
         if(_playerInit.IsTeleporting) return;
         if(_recentlyInspected) { return; }
-        
+
         _interact.isInteracting = true;
 
         _recentlyInspected = true;
         _characterController.enabled = false;
         _isInspecting = true;
+
+        originalLayers = new Dictionary<Transform, int>();
+        SetLayerRecursively(transform, inspectLayer, originalLayers);
 
         StartCoroutine(StopRecentlyInspecting());
     }
@@ -89,10 +97,33 @@ public class Inspect : MonoBehaviour, IInteractable
     {
         if(!_isInspecting) { return;}
         if(_recentlyInspected) { return; }
-        
+
         _interact.isInteracting = false;
         _isInspecting = false;
         _characterController.enabled = true;
+
+        ResetLayerRecursively(transform, originalLayers);
+    }
+    private void ResetLayerRecursively(Transform trans, Dictionary<Transform, int> originalLayers)
+    {
+        if (originalLayers.ContainsKey(trans))
+        {
+            trans.gameObject.layer = originalLayers[trans];
+        }
+        foreach (Transform child in trans)
+        {
+            ResetLayerRecursively(child, originalLayers);
+        }
+    }
+
+    private void SetLayerRecursively(Transform trans, int layer, Dictionary<Transform, int> originalLayers)
+    {
+        originalLayers[trans] = trans.gameObject.layer;
+        trans.gameObject.layer = layer;
+        foreach (Transform child in trans)
+        {
+            SetLayerRecursively(child, layer, originalLayers);
+        }
     }
     private void InspectObject()
     {

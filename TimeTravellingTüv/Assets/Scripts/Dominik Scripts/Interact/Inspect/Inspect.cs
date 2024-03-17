@@ -43,6 +43,7 @@ public class Inspect : MonoBehaviour, IInteractable
     {
         _starterAssetsInputs.OnInteractEvent += EndInspect;
         _starterAssetsInputs.OnCancelEvent += EndInspect;
+        Debug.Log(gameObject.name + "subscribed to OnModifiersChangedEvent");
         InspectReferenceManager.Instance.OnModifiersChangedEvent += ChangeModifiers;
 
         _originalPosition = transform.position;
@@ -54,6 +55,7 @@ public class Inspect : MonoBehaviour, IInteractable
 
     private void ChangeModifiers(float rotMod, float divisor)
     {
+        Debug.Log("Modifiers changed");
         _rotMod = rotMod;
         _divisor = divisor;
     }

@@ -15,6 +15,7 @@ public class InspectReferenceManager : MonoBehaviour
 
     private float _rotMod;
     private float _divisor;
+    private int _previousSubscriberCount;
 
     public event Action<float, float> OnModifiersChangedEvent;
 
@@ -42,7 +43,10 @@ public class InspectReferenceManager : MonoBehaviour
         float newRotMod = IsControllerConnected() ? ControllerRotSpeed : MouseRotSpeed;
         float newDivisor = IsControllerConnected() ? ControllerDivisor : MouseDivisor;
 
-        if (newRotMod == _rotMod && newDivisor == _divisor)
+        bool valuesChanged = newRotMod != _rotMod || newDivisor != _divisor;
+        bool newSubscribers = OnModifiersChangedEvent?.GetInvocationList().Length != _previousSubscriberCount;
+
+        if (!valuesChanged && !newSubscribers)
         {
             return;
         }
@@ -50,6 +54,8 @@ public class InspectReferenceManager : MonoBehaviour
         _rotMod = newRotMod;
         _divisor = newDivisor;
         OnModifiersChangedEvent?.Invoke(_rotMod, _divisor);
+
+        _previousSubscriberCount = OnModifiersChangedEvent?.GetInvocationList().Length ?? 0;
     }
 
     private bool IsControllerConnected()
